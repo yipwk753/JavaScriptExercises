@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Notes</title>
+    </head>
+    <body>
+        <div>Hello World!</div>
+        <span id="span1"></span>
+    </body>
+    <script>
+        var i=0;
+        var Note={
+            id: 0,
+            x: 0,
+            note: ""
+        }
+        function CreateNote(id,x,note) {
+            var n=Object.create(Note);
+            n.id=id;
+            n.x=x;
+            n.note=note;
+            console.log("id: "+n.id+", x: "+n.x+", note: "+n.note);
+            return n;
+        }
+        function DisplayNote(Note) {
+            document.getElementById("span1").innerHTML="ID: "+Note.id+", X: "+Note.x+", Note: "+Note.note;
+        }
+        function EditNote(Note,id,x,note) {
+            var n=Note;
+            n.id=id;
+            n.x=x;
+            n.note=note;
+            console.log("id: "+n.id+", x: "+n.x+", note: "+n.note);
+            return n;
+        }
+        var note1=CreateNote(++i,10,"Hello");
+        EditNote(note1,note1.id,20,"Goodbye");
+        DisplayNote(note1);
+    </script>
+</html>
