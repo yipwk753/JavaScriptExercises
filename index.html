@@ -7,36 +7,56 @@
     </head>
     <body>
         <div>Hello World!</div>
-        <span id="span1"></span>
+        <input type="radio" class="modes" name="modes" value="Create" onclick="CheckRadio(this);"/>
+        <span>Create</span>
+        <input type="radio" class="modes" name="modes" value="Edit" onclick="CheckRadio(this);"/>
+        <span>Edit</span>
+        <input type="radio" class="modes" name="modes" value="Delete" onclick="CheckRadio(this);"/>
+        <span>Delete</span>
+        <div id="container" style="height:800px;width:1000px;border-style:solid;" onclick="Interact(this);"></div>
     </body>
     <script>
         var i=0;
+        var rBtnValue;
         var Note={
             id: 0,
-            x: 0,
             note: ""
         }
-        function CreateNote(id,x,note) {
+        var notesArray=[];
+        function CheckRadio(t) {
+           rBtnValue=t.value;
+           console.log("value: "+rBtnValue);
+        }
+        function CreateNote(note) {
             var n=Object.create(Note);
-            n.id=id;
-            n.x=x;
+            n.id=++i;
             n.note=note;
-            console.log("id: "+n.id+", x: "+n.x+", note: "+n.note);
+            notesArray.push(n);
+            console.log("id: "+n.id+", note: "+n.note);
             return n;
         }
-        function DisplayNote(Note) {
-            document.getElementById("span1").innerHTML="ID: "+Note.id+", X: "+Note.x+", Note: "+Note.note;
+        function DeleteNote(id) {
+           var n=document.getElementById(id);
+           n.parentNode.removeChild(n);
         }
-        function EditNote(Note,id,x,note) {
+        /*function DisplayNote(Note) {
+            document.getElementById("span1").innerHTML="ID: "+Note.id+", Note: "+Note.note;
+        }*/
+        function EditNote(Note,id,note) {
             var n=Note;
             n.id=id;
-            n.x=x;
             n.note=note;
-            console.log("id: "+n.id+", x: "+n.x+", note: "+n.note);
+            console.log("id: "+n.id+", note: "+n.note);
             return n;
         }
-        var note1=CreateNote(++i,10,"Hello");
-        EditNote(note1,note1.id,20,"Goodbye");
-        DisplayNote(note1);
+        function Interact(t) {
+           if (rBtnValue==="Create") {
+             var note=CreateNote(++i,10,prompt());
+           } else if (rBtnValue==="Edit") {
+               EditNote(t,t.id,prompt());
+           } else {
+              DeleteNote(t.id);
+           }
+        }
     </script>
 </html>
