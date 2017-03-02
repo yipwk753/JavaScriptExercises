@@ -13,49 +13,87 @@
         <span>Edit</span>
         <input type="radio" class="modes" name="modes" value="Delete" onclick="CheckRadio(this);"/>
         <span>Delete</span>
-        <div id="container" style="height:800px;width:1000px;border-style:solid;" onclick="Interact(this);"></div>
+        <div id="display">ID: 0, Name="", Note=""</div>
+        <div id="container" style="height:400px;width:400px;border-style:solid;" onclick=Interact();></div>
     </body>
     <script>
         var i=0;
         var rBtnValue;
         var Note={
             id: 0,
+            name: "",
             note: ""
         }
         var notesArray=[];
+
         function CheckRadio(t) {
            rBtnValue=t.value;
-           console.log("value: "+rBtnValue);
         }
-        function CreateNote(note) {
-            var n=Object.create(Note);
-            n.id=++i;
-            n.note=note;
-            notesArray.push(n);
-            console.log("id: "+n.id+", note: "+n.note);
-            return n;
+
+        function CreateNote(input) {
+           ++i;
+           var element=document.createElement('div');
+           element.id="note"+i;
+           element.style.cssText='height:20px;width:20px;background-color:red;margin:10px;'
+           element.innerHTML=i;
+           var n=Object.create(Note);
+           n.id=i;
+           n.name=element.id;
+           n.note=input;
+           notesArray.push(n);
+           element.onclick=function ClickNote(e) {
+              if (!e) {
+                 var e=window.event;
+              }
+              e.cancelBubble=true;
+              if (e.stopPropagation) {
+                 e.stopPropagation();
+              }
+              if (rBtnValue==="Edit") {
+                 var userInput=prompt();
+                 if (userInput===null) {
+                    return;
+                 }
+                 EditNote(n, this.id, userInput);
+              } else if (rBtnValue==="Delete") {
+                 if (notesArray.length>0) {
+                   DeleteNote(this.id);
+                 }
+              } else {
+                 DisplayNote(n);
+              }
+            }
+           document.getElementById('container').appendChild(element);
+           DisplayNote(n);
         }
+
         function DeleteNote(id) {
            var n=document.getElementById(id);
            n.parentNode.removeChild(n);
+           document.getElementById("display").innerHTML='ID='+0+', Name=""'+', Note=""';
+           --i;
         }
-        /*function DisplayNote(Note) {
-            document.getElementById("span1").innerHTML="ID: "+Note.id+", Note: "+Note.note;
-        }*/
-        function EditNote(Note,id,note) {
-            var n=Note;
-            n.id=id;
-            n.note=note;
-            console.log("id: "+n.id+", note: "+n.note);
-            return n;
+
+        function DisplayNote(Note) {
+            document.getElementById("display").innerHTML="ID="+Note.id+", Name="+Note.name+", Note="+Note.note;
         }
-        function Interact(t) {
+
+        function EditNote(Note,id,input) {
+           var n=Note;
+           n.note=input;
+           var index=notesArray.indexOf(id)
+           notesArray[index]=n;
+           DisplayNote(n);
+           return n;
+        }
+
+        function Interact() {
            if (rBtnValue==="Create") {
-             var note=CreateNote(++i,10,prompt());
-           } else if (rBtnValue==="Edit") {
-               EditNote(t,t.id,prompt());
-           } else {
-              DeleteNote(t.id);
+               var userInput=prompt();
+               if (userInput===null) {
+                  return;
+               }
+               var note=CreateNote(userInput);
            }
         }
     </script>
