@@ -6,7 +6,8 @@
         <title>Notes</title>
     </head>
     <body>
-        <div>Hello World!</div>
+        <span>Go To: </span>
+        <span id="journal" onclick="GoToLink();">Journal</span><br/>
         <input type="radio" class="modes" name="modes" value="Create" onclick="CheckRadio(this);"/>
         <span>Create</span>
         <input type="radio" class="modes" name="modes" value="Edit" onclick="CheckRadio(this);"/>
@@ -36,11 +37,11 @@
            element.id="note"+i;
            element.style.cssText='height:20px;width:20px;background-color:red;margin:10px;'
            element.innerHTML=i;
-           var n=Object.create(Note);
-           n.id=i;
-           n.name=element.id;
-           n.note=input;
-           notesArray.push(n);
+           var note=Object.create(Note);
+           note.id=i;
+           note.name=element.id;
+           note.note=input;
+           notesArray.push(note);
            element.onclick=function ClickNote(e) {
               if (!e) {
                  var e=window.event;
@@ -54,17 +55,17 @@
                  if (userInput===null) {
                     return;
                  }
-                 EditNote(n, this.id, userInput);
+                 EditNote(note, this.id, userInput);
               } else if (rBtnValue==="Delete") {
                  if (notesArray.length>0) {
                    DeleteNote(this.id);
                  }
               } else {
-                 DisplayNote(n);
+                 DisplayNote(note);
               }
             }
            document.getElementById('container').appendChild(element);
-           DisplayNote(n);
+           DisplayNote(note);
         }
 
         function DeleteNote(id) {
@@ -79,12 +80,16 @@
         }
 
         function EditNote(Note,id,input) {
-           var n=Note;
-           n.note=input;
+           var note=Note;
+           note.note=input;
            var index=notesArray.indexOf(id)
-           notesArray[index]=n;
-           DisplayNote(n);
-           return n;
+           notesArray[index]=note;
+           DisplayNote(note);
+           return note;
+        }
+
+        function GoToLink() {
+           window.location.href="journal.html";
         }
 
         function Interact() {

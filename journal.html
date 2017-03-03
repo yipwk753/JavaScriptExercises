@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Journal</title>
+   </head>
+   <body>
+      <span>Go To: </span>
+      <span id="index" onclick="GoToLink();">Index</span><br/>
+   </body>
+   <script>
+      var days=['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var todayDate=new Date();
+      var currentMonth=todayDate.getUTCMonth();
+      var currentYear=todayDate.getFullYear();
+      var daysInCurrentMonth=new Date(currentYear, currentMonth+1, 0).getDate();
+      console.log("year: "+currentYear);
+      console.log("1: "+todayDate);
+      console.log("days: "+daysInCurrentMonth);
+
+      function CreateTable() {
+         var body=document.getElementsByTagName('body')[0];
+         var table=document.createElement('table');
+         table.style.cssText="width:100%;";
+         var tbody=document.createElement('tbody');
+         var trDayNum = document.createElement('tr');
+
+         for (var i=1;i<daysInCurrentMonth+1;i++) {
+            var br=document.createElement('div');
+            var th=document.createElement('th');
+            th.innerHTML=i;
+            th.style.cssText="border-style:solid;border-color:grey;";
+            trDayNum.appendChild(th);
+         }
+
+         tbody.appendChild(trDayNum);
+         var trDayName = document.createElement('tr');
+
+         for (var i=1; i<daysInCurrentMonth+1;i++) {
+            var date=new Date(currentYear, currentMonth, i);
+            var thDay=document.createElement('th');
+            thDay.innerHTML=days[date.getDay()][0];
+            thDay.style.cssText="border-style:solid;border-color:grey;";
+            trDayName.appendChild(thDay);
+         }
+
+         tbody.appendChild(trDayName);
+         table.appendChild(tbody);
+         body.appendChild(table);
+      }
+
+      function GoToLink() {
+         window.location.href="index.html";
+      }
+
+      CreateTable();
+   </script>
+</html>
