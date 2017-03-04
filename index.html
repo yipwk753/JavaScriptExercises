@@ -24,7 +24,7 @@
             id: 0,
             name: "",
             note: ""
-        }
+        };
         var notesArray=[];
 
         function CheckRadio(t) {
@@ -71,8 +71,12 @@
         function DeleteNote(id) {
            var n=document.getElementById(id);
            n.parentNode.removeChild(n);
+           var index=GetArrayIndex(id);
+           if (index>-1) {
+             notesArray.splice(index,1);
+           }
            document.getElementById("display").innerHTML='ID='+0+', Name=""'+', Note=""';
-           --i;
+           //--i;
         }
 
         function DisplayNote(Note) {
@@ -82,10 +86,20 @@
         function EditNote(Note,id,input) {
            var note=Note;
            note.note=input;
-           var index=notesArray.indexOf(id)
+           var index=GetArrayIndex(id);
            notesArray[index]=note;
            DisplayNote(note);
            return note;
+        }
+
+        function GetArrayIndex(id) {
+          var index=-1;
+           for (var i=0; i<notesArray.length; i++) {
+              if (notesArray[i].name===id) {
+               index=i;
+              }
+           }
+           return index;
         }
 
         function GoToLink() {

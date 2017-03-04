@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Posts</title>
+   </head>
+   <body>
+      <div id="PostsContainer"></div>
+   </body>
+   <script>
+      var Post={
+        Comments: [
+           {User:"", UserComment:""}
+        ],
+        Content: "",
+        Id: 0,
+        Poster: "",
+        StarredBy: [
+           {User:"", UserStars:0}
+        ],
+        Stars: 0,
+        Tags: [
+           {Title:"", Description:""}
+        ],
+        ViewedBy: [],
+        Views: 0
+      };
+
+      var post=Object.create(Post);
+      post.Comments[0].User="John";
+      post.Comments[0].UserComment="Good post";
+      post.Comments[1].User="Jill";
+      post.Comments[1].UserComment="Bad post";
+      post.Content="Blah blah blah";
+      post.Id=1;
+      post.StarredBy[0].User="Jack";
+      post.StarredBy[0].UserStars=5;
+      post.Stars=5;
+      post.Tags[0].Title="General";
+      post.Tags[0].Description="Post about general things";
+      post.ViewedBy=["John", "Jill", "Jack"],
+      post.Views=post.ViewedBy.length;
+   </script>
+</html>
